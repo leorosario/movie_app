@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   get_it: ^9.2.1
   dio: ^5.9.2
+  flutter_spinkit: ^5.2.2
+  duration: ^4.0.3
 
 dev_dependencies:
   flutter_test:

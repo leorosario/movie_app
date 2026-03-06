@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  duration:
+    dependency: "direct main"
+    description:
+      name: duration
+      sha256: "13e5d20723c9c1dde8fb318cf86716d10ce294734e81e44ae1a817f3ae714501"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -86,6 +94,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  flutter_spinkit:
+    dependency: "direct main"
+    description:
+      name: flutter_spinkit
+      sha256: "77850df57c00dc218bfe96071d576a8babec24cf58b2ed121c83cca4a2fdce7f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
