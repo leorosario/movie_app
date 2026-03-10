@@ -16,8 +16,7 @@ class MovieListController {
 
   Future<void> getMovies() async{
     var result = await api.getMovies();
-    print("TesteTesteTesteTesteTesteTesteTesteTesteTesteTeste");
-    print("$result Teste");
+   
     _controller.sink.add(result);
   }
 }

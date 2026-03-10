@@ -13,4 +13,10 @@ class MovieApi{
       .map((item) => Movie.fromJon(item))
       .toList();    
   }
+
+  Future<Movie> getMovie(int id) async {
+    var response = await _dio.get('/Filme/$id');
+
+    return Movie.fromJon(response.data);    
+  }
 }
