@@ -19,4 +19,8 @@ class MovieApi{
 
     return Movie.fromJon(response.data);    
   }
+
+  Future<void> deleteComment(int movieId, int id) async {
+    await _dio.delete('/Filme/$movieId/Comentario/$id');  
+  }
 }

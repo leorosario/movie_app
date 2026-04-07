@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/data/models/movie.dart';
 import 'package:movie_app/pages/movie_detail/movie_detail_controller.dart';
+import 'package:movie_app/pages/movie_detail/widgets/add_comment_widget.dart';
 import 'package:movie_app/pages/movie_detail/widgets/movie_detail_about_widget.dart';
+import 'package:movie_app/pages/movie_detail/widgets/movie_detail_comments_widget.dart';
 import 'package:movie_app/pages/movie_detail/widgets/movie_detail_cover_widget.dart';
 import 'package:movie_app/pages/movie_list/widgets/movie_item_widget.dart';
 import 'package:movie_app/service_locator.dart';
@@ -38,19 +40,38 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         initialData: widget.movie,
         stream: controller.stream,
         builder: (context, snapshot) {
-          var movie = snapshot.data!;
-
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return const ProgressIndicatorWidget();
-          // }
-
-          
+          var movie = snapshot.data!;   
 
           return CustomScrollView(
             slivers: [
               MovieDetailCoverWidget(movie: movie),
-              MovieDetailAboutWidget(movie: movie)
-
+              MovieDetailAboutWidget(movie: movie),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
+                  child: Text(
+                    'Comentários',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ), 
+              ),
+              if (snapshot.connectionState == ConnectionState.waiting) 
+                const SliverToBoxAdapter(
+                  child: ProgressIndicatorWidget(),
+                )
+              else if (movie.comments.isEmpty)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Text(
+                      'Seja o primeiro a comentar',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                )
+              else
+                MovieDetailCommentsWidget(movie: movie),
+              const AddCommentWidget()
             ],
           );
         },
