@@ -36,6 +36,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   Widget build(BuildContext context) {
     var movie = widget.movie;
     return Scaffold(   
+      backgroundColor: Color.alphaBlend(Colors.black12, Theme.of(context).scaffoldBackgroundColor),
       body: StreamBuilder<Movie>(
         initialData: widget.movie,
         stream: controller.stream,
@@ -48,7 +49,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               MovieDetailAboutWidget(movie: movie),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
+                  padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                   child: Text(
                     'Comentários',
                     style: Theme.of(context).textTheme.titleMedium,

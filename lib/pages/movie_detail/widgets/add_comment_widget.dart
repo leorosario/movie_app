@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:movie_app/pages/movie_detail/movie_detail_controller.dart';
+import 'package:movie_app/service_locator.dart';
 
 class AddCommentWidget extends StatefulWidget {
   const AddCommentWidget({super.key});
@@ -8,6 +11,7 @@ class AddCommentWidget extends StatefulWidget {
 }
 
 class _AddCommentWidgetState extends State<AddCommentWidget> {
+  final controller = getIt<MovieDetailController>();
   final formKey = GlobalKey<FormState>();
   final commentNode = FocusNode();
   final commentController = TextEditingController();
@@ -19,7 +23,7 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
         padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Card(
           child: Container(
-            color: Colors.black45,
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
@@ -31,6 +35,9 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
                       controller: commentController,
                       textCapitalization: TextCapitalization.sentences,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(300),
+                      ],
                       validator: (v) {
                         if(v == null || v.isEmpty){
                           return 'Não pode ser vazio';
@@ -62,9 +69,18 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
 
   void onSubmitted(){
     if (!formKey.currentState!.validate()) return;
-    print('submit');
-    // TODO: Enviar para API
-    // commentNode.unfocus();
-    // formKey.currentState!.reset();
+    
+    controller.postComment(commentController.text)
+    .then((value){
+      commentNode.unfocus();
+      formKey.currentState!.reset();
+    } , onError: onError);   
+  }
+
+  void onError(error){
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(content: Text(error.toString()),)
+    );
   }
 }
